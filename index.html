@@ -17,6 +17,20 @@
             --border: rgba(255, 255, 255, 0.08);
         }
 
+        /* =========================================
+           ADIÇÃO 1: REMOVE O QUADRADO AZUL E TRAVA SELEÇÃO
+           ========================================= */
+        * {
+            -webkit-tap-highlight-color: transparent; /* Remove o quadrado azul no celular */
+        }
+
+        body {
+            user-select: none; /* Bloqueia seleção de texto */
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+        /* ========================================= */
+
         * {
             margin: 0;
             padding: 0;
@@ -342,6 +356,29 @@
             font-size: 12px;
             color: #4b5563;
         }
+
+        /* =========================================
+           ADIÇÃO 2: ANIMAÇÃO SUPER DAORA NO TOQUE
+           ========================================= */
+        .menu-btn:active, .close-btn:active {
+            transform: scale(0.85) rotate(10deg); /* Efeito de apertar e girar levemente */
+            background: rgba(255, 42, 42, 0.2);
+            border-color: var(--red);
+            transition: transform 0.1s ease, background 0.1s;
+        }
+
+        .btn:active {
+            transform: scale(0.95); /* Efeito de afundar o botão */
+            box-shadow: 0 2px 10px rgba(255, 42, 42, 0.2);
+        }
+
+        .menu-item:active {
+            background: rgba(255, 42, 42, 0.15);
+            transform: translateX(8px) scale(0.98); /* Desliza e encolhe ao tocar */
+            border-color: rgba(255, 42, 42, 0.3);
+        }
+        /* ========================================= */
+
     </style>
 </head>
 <body>
@@ -456,6 +493,28 @@
             menu.classList.toggle('active');
             overlay.classList.toggle('active');
         }
+
+        // =========================================
+        // ADIÇÃO 3: BLOQUEIO DE CÓPIA E MENU DE CONTEXTO
+        // =========================================
+        // Impede copiar e cortar
+        document.addEventListener('copy', function(e) { e.preventDefault(); });
+        document.addEventListener('cut', function(e) { e.preventDefault(); });
+        
+        // Impede abrir o menu de contexto (botão direito do mouse ou toque longo)
+        document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+        
+        // Truque extra para bloquear atalhos como Ctrl+C, Ctrl+U (código fonte), F12
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 'u' || e.key === 'x' || e.key === 'a')) {
+                e.preventDefault();
+            }
+            // Bloqueia F12
+            if (e.key === 'F12') {
+                e.preventDefault();
+            }
+        });
+        // =========================================
     </script>
 
 </body>
